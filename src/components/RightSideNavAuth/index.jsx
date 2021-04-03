@@ -14,7 +14,7 @@ export const RightSideNavAuth = () => {
   return (
     <Grid item xs={3} className={classes.sideBar}>
       <Grid item xs={12} className={classes.sideBarTitle}>
-    Olaaa
+    
       </Grid>
 
 
