@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { useRouter } from 'next/router';
-import { route } from '../../../../../api/routes/casino.routes';
 
 
 export default function CasinoGameCard({name,imgSrc,description}) {
