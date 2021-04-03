@@ -6,6 +6,7 @@ import AuthContext from '../context/UserProvider/context';
 import { useState } from 'react';
 import Api from '../utils/api.utils';
 import UserInfoContext from '../context/UserInfoProvider/context';
+import './global.css'
 
 export default function App({ Component, pageProps }) {
   const [userAuth, setUserAuth] = useState(false);

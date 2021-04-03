@@ -11,12 +11,12 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { useRouter } from 'next/router';
 
 
-export default function CasinoGameCard({name,imgSrc,description}) {
+export default function CasinoGameCard({name,imgSrc,description,path}) {
   const classes = useStyles();
   const router = useRouter()
 
   const handlePlayClick = () => {
-    router.push('/casino/blackjack')
+    router.push(path)
   }
 
   const handleLikeClick = async()=>{

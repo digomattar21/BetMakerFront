@@ -19,7 +19,8 @@ export default function Casino() {
 
         </Grid>
         <Grid item xs={6}>
-          <CasinoGameCard name={'BlackJack'} imgSrc={BlackJackImg} description={description}/>
+          <CasinoGameCard name={'BlackJack'} imgSrc={BlackJackImg} description={description} path={'/casino/blackjack'}/>
+          <CasinoGameCard name={'Roulette'} imgSrc={BlackJackImg} description={description} path={'/casino/roulette'}/>
         </Grid>
 
 
