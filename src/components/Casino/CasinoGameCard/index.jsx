@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { useRouter } from 'next/router';
+import { route } from '../../../../../api/routes/casino.routes';
 
 
 export default function CasinoGameCard({name,imgSrc,description}) {
@@ -19,14 +20,24 @@ export default function CasinoGameCard({name,imgSrc,description}) {
     router.push('/casino/blackjack')
   }
 
+  const handleLikeClick = async()=>{
+    try {
+      let req = await Api.likeGame(name);
+      router.push('/casino')
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   return (
     <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={imgSrc}
+          image='https://thumbs.dreamstime.com/b/blackjack-casino-man-makes-bet-puts-chip-37886914.jpg'
           title="Img"
         />
+        {/* <img src='https://thumbs.dreamstime.com/b/blackjack-casino-man-makes-bet-puts-chip-37886914.jpg' alt='img'/> */}
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {name}
@@ -43,7 +54,7 @@ export default function CasinoGameCard({name,imgSrc,description}) {
         <Button size="large" color="primary">
           Share
         </Button>
-        <Button size="large" color="primary">
+        <Button size="large" color="primary" onClick={()=>handleLikeClick()}>
           <FavoriteBorderIcon />
         </Button>
       </CardActions>

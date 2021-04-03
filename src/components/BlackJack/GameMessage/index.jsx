@@ -1,11 +1,11 @@
-import { makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 
 const GameMessage = (props) => {
   const classes = useStyles();
   return (
     <div className={classes.backdrop}>
       <p>{props.msg}</p>
-      <button onClick={() => props.resetClicked()}>Play Again</button>
+      <Button size='large' variant='filled' className={classes.playAgainBtn} onClick={() => props.resetClicked()}>Play Again</Button>
     </div>
   );
 };
@@ -23,6 +23,12 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: "5px",
     cursor: "pointer",
   },
+  playAgainBtn:{
+    backgroundColor:"blue",
+    color:'white',
+    fontSize: "20px",
+    marginTop: '60px'
+  }
 }));
 
 export default GameMessage;

@@ -110,11 +110,14 @@ class Api {
   async updatePlayerChips(chips){
     try{
       let req = await this.api.post('/casino/blackjack/updateplayerchips', {chips: chips})
-      console.log(req)
+      console.log(req.data)
+      return req.data
     }catch(err){
       console.log(err.message)
     }
   }
+
+
 }
 
 export default new Api();

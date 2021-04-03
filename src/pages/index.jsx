@@ -22,8 +22,7 @@ export default function Home() {
           <Grid item xs={6}>
             <SportsMiddleSection />
           </Grid>
-        {userAuth && <RightSideNavAuth />}
-        {!userAuth && <RightSideNav />}
+        {userAuth && <h1>Hello</h1>}
         </Grid>
       </BetsProvider>
     </>

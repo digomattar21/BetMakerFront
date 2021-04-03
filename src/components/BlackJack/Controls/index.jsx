@@ -24,11 +24,11 @@ const Controls = (props) => {
       <div className={classes.mid}>
         <span>
           <button onClick={() => props.makeBet(1)}
-            className={classes.bet + ' ' + isDisabled()} disabled={props.isPlaying}>1</button>
+            className={classes.bet + ' ' + isDisabled() + ' ' + classes.bet1} disabled={props.isPlaying}>1</button>
           <button onClick={() => props.makeBet(5)}
-            className={classes.bet + ' ' + isDisabled() + " bet5"} disabled={props.isPlaying}>5</button>
+            className={classes.bet + ' ' + isDisabled() + ' ' +classes.bet5} disabled={props.isPlaying}>5</button>
           <button onClick={() => props.makeBet(10)}
-            className={classes.bet + ' ' + isDisabled() + " bet10"} disabled={props.isPlaying}>10</button>
+            className={classes.bet + ' ' + isDisabled() + ' ' + classes.bet10} disabled={props.isPlaying}>10</button>
         </span>
          <span style={{paddingLeft: 40}}>
            <button className={classes.btn + ' ' + isDealDisabled() + " " + buttonVisible(true)}
@@ -156,6 +156,20 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "20px",
 
   },
+
+  bet5:{
+    backgroundColor:'red',
+    color:'white'
+  },
+  bet1:{
+    backgroundColor:'yellow',
+    color:'black'
+  },
+  bet10:{
+    backgroundColor:'blue',
+    color:'white',
+  
+  }
 }));
 
 export default Controls;
