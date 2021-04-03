@@ -7,6 +7,8 @@ export const RightSideNavAuth = () => {
   const [createTournament, setCreateTournament] = useState(false);
 
 
+
+  
   const handleCreateTournamentClick = () =>{
     setCreateTournament(!createTournament);
   }
