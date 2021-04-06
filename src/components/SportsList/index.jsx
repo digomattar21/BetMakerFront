@@ -1,21 +1,28 @@
-import { useContext, useEffect, useState } from 'react';
-import { loadSports } from '../../context/BetsProvider/actions';
-import BetsContext from '../../context/BetsProvider/context';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { SportsCard } from '../SportCard';
 import { SportSearch } from '../SportSearch';
+import React, { useState, useEffect } from 'react';
+import Api from '../../utils/api.utils'
 
 export const SportsList = () => {
-  const betsContext = useContext(BetsContext);
   const [searchValue, setSearchValue] = useState('');
-  const { betsState, betsDispatch } = betsContext;
-  const sports = betsState.sports;
+  const [sports, setSports] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
-    loadSports(betsDispatch);
+    loadSports();
   }, []);
+
+  async function loadSports(){
+    try {
+      let req = await Api.getSports()
+      console.log(req)
+      setSports(req.data)
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   async function handleSearchValueChange(e) {
     try {
