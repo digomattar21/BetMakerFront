@@ -117,6 +117,28 @@ class Api {
     }
   }
 
+  async getSports(){
+    try {
+      let req = await this.api.get('/sports')
+      if (req.status === 200 || req.status===201){
+        return req.data
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  async getSportBets(sport_key){
+    try{
+      let req = await this.api.get(`/sports/${sport_key}`)
+      if (req.status===200 || req.status===201){
+        return req.data
+      }
+    }catch(err){
+      console.log(err.message)
+    }
+  }
+
   
 
 }

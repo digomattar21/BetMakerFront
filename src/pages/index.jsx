@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import BetsProvider from '../context/BetsProvider';
+
 import { SportsList } from '../components/SportsList';
 import { NavBar } from '../components/NavBar';
 import { RightSideNavAuth } from '../components/RightSideNavAuth';
@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <BetsProvider>
+      
         <Grid container spacing={3}>
           <SportsList />
           <Grid item xs={6}>
@@ -25,7 +25,7 @@ export default function Home() {
         {userAuth && <RightSideNavAuth />}
         {!userAuth && <RightSideNav />}
         </Grid>
-      </BetsProvider>
+      
     </>
   );
 }

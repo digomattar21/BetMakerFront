@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import BetsProvider from '../../context/BetsProvider';
 import { SportsList } from '../../components/SportsList';
 import SportBetList from '../../components/SportBetList';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,16 +13,19 @@ export default function About() {
   const sport_key = id;
   const classes = useStyles()
 
+  useEffect(()=>{
+    console.log(id)
+  },[])
+
+
   return (
     <>
       <NavBar />
-      <BetsProvider>
         <Grid container spacing={3} className={classes.container}>
           <SportsList />
           <SportBetList sport_key={sport_key} />
           <RightSideNav />
         </Grid>
-      </BetsProvider>
     </>
   );
 }

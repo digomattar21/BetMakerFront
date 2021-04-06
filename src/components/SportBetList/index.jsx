@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { BetCard } from '../BetCard';
+import Api from '../../utils/api.utils'
 
 const SportBetList = ({ sport_key }) => {
-  const [bets, setBets] = useState([]);
+  const [h2hOdds, setH2hOdds] = useState([]);
+  const [spreadOdds, setSpreadOdds] = useState([]);
+  const [totalsOdds, setTotalsOdds] = useState([]);
   const classes = useStyles();
 
   async function loadSportBets(sport_key) {
     try {
-      let url = `http://localhost:3080/sports/${sport_key}`;
-      let requestInfo = await axios.get(url);
-      const data = requestInfo.data;
-      setBets(data);
+      let data = await Api.getSportBets(sport_key);
+      let h2hOdds = data[0]
+      let spreadOdds1 = data[1]
+      let totalsOdds1 = data[2]
+
+      setSpreadOdds(spreadOdds1)
+      setTotalsOdds(totalsOdds1)
+      setH2hOdds(h2hOdds);
     } catch (error) {
       console.log(error.message);
     }
   }
+
 
   useEffect(() => {
     loadSportBets(sport_key);
@@ -25,9 +32,9 @@ const SportBetList = ({ sport_key }) => {
 
   return (
     <Grid item xs={6} className={classes.container}>
-      {bets.length > 0 &&
-        bets.map((bet) => {
-          return <BetCard bet={bet} />
+      {h2hOdds && h2hOdds.length > 0 &&
+        h2hOdds.map((odd) => {
+          return <BetCard h2hOdd={odd} key={odd.id} id={odd.id}/>
         })}
     </Grid>
   );
