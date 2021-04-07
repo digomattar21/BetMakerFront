@@ -14,10 +14,87 @@ import UserInfoContext from '../../context/UserInfoProvider/context';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    height: '75%',
+  },
+  subtitle: {
+    fontSize: '14px',
+    color: '#383838',
+  },
+  liveBtn2:{
+    fontSize: '14px',
+    color: '#383838',
+    marginLeft: '10vw'
+  },
+  casinoBtn:{
+    marginLeft:'10vw',
+    borderRadius:'10%'
+  },
+  title: {
+    flexGrow: 1,
+    fontSize: 24,
+    fontFamily: 'Pragmatica-EL',
+    marginLeft: '5px',
+    color: 'black',
+    '&:hover': {
+      color: 'white',
+      fontSize: 25,
+    },
+  },
+  loginSettingsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  navbar: {
+    width: '100%',
+    backgroundColor: '#D6ED17FF',
+  },
+  menuBtnContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 19,
+  },
+  loginBtn: {
+    fontSize: '19px',
+    backgroundColor: '#383838',
+    color:'white'
+  },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  moneyLogo: {
+    fontSize: '26px',
+  },
+  money:{
+    fontSize: '16px',
+    fontWeight: 'bold',
+    color:'#383838',
+    marginRight:'15px'
+  },
+  notificationsIcon:{
+    fontSize: '23px',
+    color:'black',
+    backgroundColor:'transparent',
+    '&:hover': {
+      color: 'black',
+      fontSize: '25px',
+      background: 'transparent'
+    }
+  },
+}));
+
 export const NavBar = () => {
   const classes = useStyles();
   const { userAuth, changeUserAuth } = useContext(AuthContext);
-  const {userInfo, getUserInfo} = useContext(UserInfoContext)
+  const {userInfo, getUserInfo} = useContext(UserInfoContext);
   const router = useRouter();
 
   const [money,setMoney] = useState(null)
@@ -61,6 +138,7 @@ export const NavBar = () => {
     getUser()
   },[])
 
+  
 
 
   return (
@@ -153,79 +231,4 @@ export const NavBar = () => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    height: '75%',
-  },
-  subtitle: {
-    fontSize: '14px',
-    color: '#383838',
-  },
-  liveBtn2:{
-    fontSize: '14px',
-    color: '#383838',
-    marginLeft: '10vw'
-  },
-  casinoBtn:{
-    marginLeft:'10vw',
-    borderRadius:'10%'
-  },
-  title: {
-    flexGrow: 1,
-    fontSize: 24,
-    fontFamily: 'Pragmatica-EL',
-    marginLeft: '5px',
-    color: 'black',
-    '&:hover': {
-      color: 'white',
-      fontSize: 25,
-    },
-  },
-  loginSettingsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  navbar: {
-    width: '100%',
-    backgroundColor: '#D6ED17FF',
-  },
-  menuBtnContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 19,
-  },
-  loginBtn: {
-    fontSize: '19px',
-    backgroundColor: '#383838',
-    color:'white'
-  },
-  logoContainer: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  moneyLogo: {
-    fontSize: '26px',
-  },
-  money:{
-    fontSize: '16px',
-    fontWeight: 'bold',
-    color:'#383838',
-    marginRight:'15px'
-  },
-  notificationsIcon:{
-    fontSize: '23px',
-    color:'black',
-    backgroundColor:'transparent',
-    '&:hover': {
-      color: 'black',
-      fontSize: '25px',
-      background: 'transparent'
-    }
-  },
-}));
+
