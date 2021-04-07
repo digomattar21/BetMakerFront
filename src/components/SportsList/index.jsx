@@ -4,6 +4,30 @@ import { SportsCard } from '../SportCard';
 import { SportSearch } from '../SportSearch';
 import React, { useState, useEffect } from 'react';
 import Api from '../../utils/api.utils'
+import { SoccerNavCard } from '../SoccerNavCard';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  gridRow: {
+    marginTop: '0px',
+  },
+  sideBar: {
+    margin: 0,
+    marginTop: '63px',
+    padding: 0,
+    overflowY: 'scroll',
+    backgroundColor: '#383838',
+  },
+}));
+
+
 
 export const SportsList = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -39,15 +63,18 @@ export const SportsList = () => {
         searchValue={searchValue}
         handleSearchValueChange={handleSearchValueChange}
       />
+      <SoccerNavCard />
       {!searchValue &&
         sports.map((sport) => {
-          return (
+          if (sport.key != 'soccer' &&  sport.key != 'Soccer'){
+            return (
             <SportsCard
               key={sport.key}
               sport_key={sport.key}
               title={sport.title}
             />
           );
+          }
         })}
       {searchValue &&
         sports.map((sport) => {
@@ -64,24 +91,3 @@ export const SportsList = () => {
     </Grid>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-  gridRow: {
-    marginTop: '0px',
-  },
-  sideBar: {
-    margin: 0,
-    marginTop: '63px',
-    padding: 0,
-    overflowY: 'scroll',
-    backgroundColor: '#383838',
-  },
-}));
