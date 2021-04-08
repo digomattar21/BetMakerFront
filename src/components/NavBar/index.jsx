@@ -124,15 +124,6 @@ export const NavBar = () => {
     }
   };
 
-  const handleLiveClick= async()=>{
-      try{
-        let req = await Api.getInplayEvents()
-        console.log(req)
-      }catch(err){
-        console.log(error)
-      }
-
-  }
 
   useEffect(()=>{
     getUser()
@@ -168,13 +159,6 @@ export const NavBar = () => {
 
 
             </>
-          )}
-          {!userAuth && (
-            <Button className={classes.liveBtn2} onClick={() =>handleLiveClick()}>
-            <Typography variant="h6" className={classes.subtitle2}>
-                LIVE
-            </Typography>
-            </Button>
           )}
         </div>
 

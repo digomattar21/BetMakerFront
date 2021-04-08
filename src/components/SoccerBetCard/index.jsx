@@ -80,9 +80,10 @@ export const SoccerBetCard = ({ fixtureId, leagueId, bookmakers, leagueCountry, 
 
 const useStyles = makeStyles({
   root: {
-    marginTop: '70px',
-    minWidth: 275,
-    maxHeight: 350,
+    marginTop: '12px',
+    minWidth: '275px',
+    maxHeight: '350px',
+    border: '1px solid lightgray'
   },
   bullet: {
     display: 'inline-block',

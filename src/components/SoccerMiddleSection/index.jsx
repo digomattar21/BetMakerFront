@@ -1,31 +1,59 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import SoccerApi from "../../utils/soccerApi.utils";
+import { MiddleSectionNav } from "../MiddleSectionNav";
 import { SoccerBetCard } from "../SoccerBetCard";
+import CachedIcon from "@material-ui/icons/Cached";
+
+const useStyles = makeStyles((theme) => ({
+  iconContainer:{
+    display:'flex',
+    justifyContent: 'center',
+    marginTop:'40vh',
+  },
+  // '@-moz-keyframes spin': { '100%' :{ '-moz-transform': 'rotate(360deg)'} },
+  // '@-webkit-keyframes spin': { '100%' :{ '-webkit-transform': 'rotate(360deg)'} },
+  '@keyframes spin':{ 
+    '100%':{
+       transform:'rotate(360deg)' 
+    } 
+    },
+    cacheIcon:{
+      fontSize: '25px',
+      color:'#D6ED17FF',
+      animation: '$spin 5s infinite'
+    },
+}));
 
 const SoccerMiddleSection = () => {
   const classes = useStyles();
-  const [matches,setMatches] = useState([])
+  const [matches, setMatches] = useState([]);
 
   useEffect(() => {
     loadNextDayEvents();
   }, []);
 
-  
-  const loadNextDayEvents = async() =>{
-    try{   
-        let req = await SoccerApi.getNextDayMatches()
-        setMatches(req)
-    }catch(err){
-        console.log(err.message)
+  const loadNextDayEvents = async () => {
+    try {
+      let req = await SoccerApi.getNextDayMatches();
+      setMatches(req);
+    } catch (err) {
+      console.log(err.message);
     }
-  }
+  };
 
   return (
-      <>
-        <Grid item xs={6}>
-            {matches.length>0 && matches.map(match =>{
-                return (<SoccerBetCard 
+    <>
+      <Grid item xs={6} style={{ marginTop: "60px" }}>
+        <MiddleSectionNav
+          sport_name="Soccer"
+          matches={matches}
+          setMatches={setMatches}
+        />
+        {matches.length > 0 &&
+          matches.map((match) => {
+            return (
+              <SoccerBetCard
                 key={match.fixture.id}
                 fixtureId={match.fixture.id}
                 leagueId={match.league.id}
@@ -33,14 +61,15 @@ const SoccerMiddleSection = () => {
                 leagueLogo={match.league.logo}
                 leagueCountry={match.league.country}
                 bookmakers={match.bookmakers}
-                />)
-
-            })}
-        </Grid>
-      </>
+              />
+            );
+          })}
+        <div className={classes.iconContainer}>
+        {(!matches || matches.length<=0) && <CachedIcon className={classes.cacheIcon} />}
+        </div>
+      </Grid>
+    </>
   );
 };
-
-const useStyles = makeStyles((theme) => ({}));
 
 export default SoccerMiddleSection;

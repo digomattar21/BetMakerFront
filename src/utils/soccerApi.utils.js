@@ -28,10 +28,31 @@ class SoccerApi {
         let req = await this.api.get('/soccer/odds/today');
         if (req.status===200){
             return req.data.matches
-        }        
+        } else{
+          return ['no results']
+        }       
       }catch(err){
           console.log(err.message)
       }
+  }
+
+  async getNext3DaysMatches(){
+    try {
+      
+      let req = this.api.get('/soccer/odds/next3')
+      return req
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  async getNextWeekMatches(){
+    try {
+      let req = this.api.get('/soccer/odds/week')
+      return req
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
 }

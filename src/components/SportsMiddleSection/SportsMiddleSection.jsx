@@ -5,7 +5,8 @@ const SportsMiddleSection = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    loadInplayEvents();
+    // loadInplayEvents();
+    console.log('mount')
   }, []);
 
   
@@ -14,7 +15,7 @@ const SportsMiddleSection = () => {
       let req = await Api.getInplayEvents();
       if (req.status===201){
         const data = Array.from(req.data.results);
-        console.log('data', data)
+        
       }
 
     } catch (error) {
