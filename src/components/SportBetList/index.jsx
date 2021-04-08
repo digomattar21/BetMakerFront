@@ -3,6 +3,7 @@ import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { BetCard } from '../BetCard';
 import Api from '../../utils/api.utils'
+import { MiddleSectionNav } from '../MiddleSectionNav';
 
 const SportBetList = ({ sport_key }) => {
   const [h2hOdds, setH2hOdds] = useState([]);
@@ -31,7 +32,8 @@ const SportBetList = ({ sport_key }) => {
   }, [sport_key]);
 
   return (
-    <Grid item xs={6} className={classes.container}>
+    <Grid item xs={7} className={classes.container}>
+    <MiddleSectionNav sport_name={sport_key}/>
       {h2hOdds && h2hOdds.length > 0 &&
         h2hOdds.map((odd) => {
           return <BetCard h2hOdd={odd} key={odd.id} id={odd.id}/>
@@ -42,8 +44,7 @@ const SportBetList = ({ sport_key }) => {
 
 const useStyles = makeStyles((theme) => ({
   container:{
-    marginTop: '60px'
-  }
-}))
+    marginTop: '60px'}
+  }))
 
 export default SportBetList;

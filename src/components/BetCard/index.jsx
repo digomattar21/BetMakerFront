@@ -103,9 +103,9 @@ export const BetCard = ({ h2hOdd,id }) => {
 
 const useStyles = makeStyles({
   root: {
-    marginTop: '10px',
-    minWidth: 275,
-    maxHeight: 350,
+    marginTop: '12px',
+    minWidth: '275px',
+    maxHeight: '350px',
   },
   bullet: {
     display: 'inline-block',
@@ -115,12 +115,6 @@ const useStyles = makeStyles({
   title: {
     fontSize: 16,
     textAlign: 'center',
-  },
-  pos: {
-    marginBottom: 12,
-  },
-  buttonGroup: {
-
   },
   cardActions:{
     display: 'flex',

@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { NavBar } from '../../components/NavBar';
 import { RightSideNav } from '../../components/RightSideNav';
+import { MiddleSectionNav } from '../../components/MiddleSectionNav';
 
 export default function About() {
   const router = useRouter();
@@ -22,8 +23,8 @@ export default function About() {
     <>
       <NavBar />
         <Grid container spacing={3} className={classes.container}>
-          <SportsList />
-          <SportBetList sport_key={sport_key} />
+            <SportsList />
+            <SportBetList sport_key={sport_key} />
           <RightSideNav />
         </Grid>
     </>
@@ -49,5 +50,11 @@ const useStyles = makeStyles((theme) => ({
   },
   container:{
     backgroundColor:'white'
+  },
+  middleContainer:{
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start'
   }
 }));
