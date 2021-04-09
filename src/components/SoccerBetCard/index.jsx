@@ -5,9 +5,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Typography from '@material-ui/core/Typography';
 import AuthContext from '../../context/UserProvider/context';
-import { CardMedia } from '@material-ui/core';
+import SoccerApi from '../../utils/soccerApi.utils'
 
 const useStyles = makeStyles({
   root: {
@@ -82,6 +81,16 @@ export const SoccerBetCard = ({ date, fixtureId, leagueId, bookmakers, leagueCou
     setAddBets(biggest)
 
   }
+
+  const getFixtureInfo=async()=>{
+    try {
+        let req = await SoccerApi.getFixtureInfo(fixtureId)
+        console.log(req)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
   
 
   const handleOddClick = (odd,bet) => {
@@ -91,7 +100,8 @@ export const SoccerBetCard = ({ date, fixtureId, leagueId, bookmakers, leagueCou
   
   useEffect(() => {
     getMostBets();
-    formatDate()
+    formatDate();
+    getFixtureInfo();
   },[]);
 
   const formatDate=()=>{

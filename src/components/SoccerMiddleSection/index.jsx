@@ -21,30 +21,38 @@ const useStyles = makeStyles((theme) => ({
   cacheIcon: {
     fontSize: "25px",
     color: "#D6ED17FF",
-    animation: "$spin 5s infinite",
+    animation: "$spin 3s infinite",
+  },
+  cacheIcon2: {
+    fontSize: "25px",
+    color: "black",
+    animation: "$spin 3s infinite",
   },
   loadBtnContainer: {
-    marginTop:'30px',
+    marginTop: "30px",
     display: "flex",
     justifyContent: "center",
   },
-  loadBtn:{
-    backgroundColor:'#D6ED17FF'
-  }
+  loadBtn: {
+    backgroundColor: "#D6ED17FF",
+  },
 }));
 
 const SoccerMiddleSection = () => {
   const classes = useStyles();
   const [matches, setMatches] = useState([]);
-  const [allMatches, setAllMatches] = useState([])
+  const [allMatches, setAllMatches] = useState([]);
   const [page, setPage] = useState(1);
+  const [maxPages,setMaxPages] = useState(10)
   const [fixturesArray, setFixturesArray] = useState([]);
+  const [message,setMessage] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [clicks, setClicks] = useState(1);
+  const [loading, setLoading] = useState(false)
 
   const [disabledD, setDisabledD] = useState(true);
-  const [disabledNext3, setDisabledNext3] = useState(false);
   const [disabledLive, setDisabledLive] = useState(false);
-  const [disabledWeek, setDisabledWeek] = useState(false);
-  const sport_name='Soccer'
+  const sport_name = "Soccer";
 
   useEffect(() => {
     loadNextDayEvents();
@@ -53,6 +61,7 @@ const SoccerMiddleSection = () => {
 
   const loadNextDayEvents = async () => {
     try {
+      setMatches([])
       let req = await SoccerApi.getNextDayMatches(page);
       setMatches(req[0]);
     } catch (err) {
@@ -65,79 +74,81 @@ const SoccerMiddleSection = () => {
       console.log(matches);
     } catch (error) {
       console.log(error);
+      setMessage(error)
     }
   };
 
-  useEffect(()=>{},[matches])
+  useEffect(() => {}, [matches]);
 
-  const handleLoadMoreClick = async () =>{  
+  const handleLoadMoreClick = async () => {
     let filter;
 
-    if (disabledD) filter = 'D+1';
-    if (disabledNext3) filter = 'D+3';
-    if (disabledWeek) filter = 'week';
+    filter='date'
+    if (disabledD) filter = "D+1";
 
-    try{  
-
-      if (filter ==='D+1'){
-        
-        let req = await SoccerApi.getNextDayMatches(page+1)
-        console.log('new req' , Array.from(req[0]))
-        let matchesCopy = [...matches]
-        console.log(' matches before' ,matchesCopy)
-        matchesCopy = [].concat(matchesCopy, req[0])
-        console.log('array after' ,matchesCopy)
-        setMatches(matchesCopy)
-      }else if (filter ==='D+3'){
-        let req = await SoccerApi.getNext3DaysMatches(page+1)
-
-      } else if (filter ==='week'){
-        let req = await SoccerApi.getWeekMatches(page+1)
-
+    
+    try {
+      console.log(clicks)
+      console.log(matches.length)
+      if (((clicks)*10)!=matches.length){
+        throw 'Por favor aguarde'
+      }else{
+        if (filter === "D+1") {
+          setLoading(true)
+          let req = await SoccerApi.getNextDayMatches(page + 1);
+          console.log("new req", Array.from(req[0]));
+          let matchesCopy = [...matches];
+          console.log(" matches before", matchesCopy);
+          matchesCopy = [].concat(matchesCopy, req[0]);
+          console.log("array after", matchesCopy);
+          setMatches(matchesCopy);
+        } else if (filter === "date"){
+          setLoading(true)
+          let req = await SoccerApi.getMatchesFromDate(selectedDate,page+1)
+          setMaxPages(req.pages)
+          let newMatchesArray = [...matches,...req.matches[0]];
+          setMatches(newMatchesArray)
+        }
+        setPage(page + 1);
+        setClicks(clicks+1)
+        setLoading(false);
       }
-      setPage(page+1)
-
-
-    }catch(err){
+    } catch (err) {
       console.log(err);
+      setMessage(err)
     }
+  };
 
-  }
+  const handleDateChange = async(e) => {
+    setSelectedDate(e.target.value)
+    try{
+      setMatches([])
+      setDisabledD(false)
+      setDisabledLive(false)
+      let newReq = await SoccerApi.getMatchesFromDate(e.target.value,1);
+      console.log(newReq.matches[0])
+      setMatches(newReq.matches[0])
+      setMaxPages(newReq.pages)
+    }catch(err){
+      console.log(err)
+      setMessage(err)
+    }
+    };
 
   const handleFilterClick = (e, btn) => {
     console.log(btn);
     switch (btn) {
       case "live":
         setDisabledLive(!disabledLive);
-        disabledD?setDisabledD(!disabledD):setDisabledD(disabledD);
-        disabledNext3?setDisabledNext3(!disabledNext3):setDisabledNext3(disabledNext3);
-        disabledWeek?setDisabledWeek(!disabledWeek):setDisabledWeek(disabledWeek);
+        disabledD ? setDisabledD(!disabledD) : setDisabledD(disabledD);
         break;
       case "D+1":
         setDisabledD(!disabledD);
-        disabledLive?setDisabledLive(!disabledLive):setDisabledLive(disabledLive);
-        disabledNext3?setDisabledNext3(!disabledNext3):setDisabledNext3(disabledNext3);
-        disabledWeek?setDisabledWeek(!disabledWeek):setDisabledWeek(disabledWeek);
-        if (sport_name =='Soccer'){
-            makeReq('D+1')
-        }
-        break;
-      case "D+3":
-        setDisabledNext3(!disabledNext3);
-        disabledD?setDisabledD(!disabledD):setDisabledD(disabledD);
-        disabledLive?setDisabledLive(!disabledLive):setDisabledLive(disabledLive);
-        disabledWeek?setDisabledWeek(!disabledWeek):setDisabledWeek(disabledWeek);
-        if (sport_name =='Soccer'){
-            makeReq('D+3')
-        }
-        break;
-      case "Week":
-        setDisabledWeek(!disabledWeek);
-        disabledD?setDisabledD(!disabledD):setDisabledD(disabledD);
-        disabledNext3?setDisabledNext3(!disabledNext3):setDisabledNext3(disabledNext3);
-        disabledLive?setDisabledLive(!disabledLive):setDisabledLive(disabledLive);
-        if (sport_name =='Soccer'){
-            makeReq('week')
+        disabledLive
+          ? setDisabledLive(!disabledLive)
+          : setDisabledLive(disabledLive);
+        if (sport_name == "Soccer") {
+          loadNextDayEvents();
         }
         break;
       default:
@@ -145,39 +156,19 @@ const SoccerMiddleSection = () => {
     }
   };
 
-
-  const makeReq =async(date)=>{
-    if (date=='D+1'){
-        try {
-            setMatches([])
-            let req = await SoccerApi.getNextDayMatches(page)
-            setMatches(req.data.matches[0])
-        } catch (error) {
-            console.log(error.message)
-        }
-    } else if (date=='D+3'){
-        try {
-            setMatches([])
-            let req = await SoccerApi.getNext3DaysMatches(page)
-            console.log(req.data.matches)
-            setMatches(req.data.matches[1])
-        } catch (error) {
-            console.log(error.message)
-        }
-
-    }else if (date=='week'){
-        try {
-            setMatches([])
-            let req = await SoccerApi.getNextWeekMatches(page)
-            setMatches(req.data.matches[2])
-        } catch (error) {
-            console.log(error.message)
-        }
-
-    }else{
-        print('nope')
+  const makeReq = async (date) => {
+    if (date == "D+1") {
+      try {
+        setMatches([]);
+        let req = await SoccerApi.getNextDayMatches(page);
+        setMatches(req.data.matches[0]);
+      } catch (error) {
+        console.log(error.message);
+      }
+    } else {
+      print("nope");
     }
-  }
+  };
 
   return (
     <Grid item xs={6} style={{ marginTop: "60px" }}>
@@ -191,10 +182,10 @@ const SoccerMiddleSection = () => {
         makeReq={makeReq}
         disabledD={disabledD}
         disabledLive={disabledLive}
-        disabledNext3={disabledNext3}
-        disabledWeek={disabledWeek}
+        handleDateChange={handleDateChange}
+        message={message}
       />
-      {matches.length > 0 &&
+      {matches && matches.length>0 &&
         matches.map((match) => {
           return (
             <SoccerBetCard
@@ -206,21 +197,25 @@ const SoccerMiddleSection = () => {
               leagueCountry={match.league.country}
               bookmakers={match.bookmakers}
               leagueFlag={match.league.flag}
-              date={match.fixt}
+              date={match.fixture.date}
             />
           );
         })}
-      {matches.length>0 && 
-      <div className={classes.loadBtnContainer}>
-        <Button
-          variant="contained"
-          size="large"
-          onClick={() => handleLoadMoreClick()}
-          className={classes.loadBtn}
-        >
-          Load More
-        </Button>
-      </div>}
+      {matches.length > 0 && (
+        <div className={classes.loadBtnContainer}>
+          {!loading && (<Button
+            variant="contained"
+            size="large"
+            onClick={() => handleLoadMoreClick()}
+            className={classes.loadBtn}
+          >
+            Load More
+          </Button>)}
+          {loading && <CachedIcon className={classes.cacheIcon2} />}
+        </div>
+      )}
+      
+      
       <div className={classes.iconContainer}>
         {(!matches || matches.length <= 0) && (
           <CachedIcon className={classes.cacheIcon} />

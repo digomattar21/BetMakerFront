@@ -3,8 +3,8 @@ import axios from 'axios';
 class SoccerApi {
   constructor() {
     this.api = axios.create({
-      // baseURL: 'https://betmaker-api.herokuapp.com',
-      baseURL:'http://localhost:3080'
+      baseURL: 'https://betmaker-api.herokuapp.com',
+      // baseURL:'http://localhost:3080'
     });
 
     this.api.interceptors.request.use(config => {
@@ -39,23 +39,23 @@ class SoccerApi {
       }
   }
 
-  async getNext3DaysMatches(page){
-    try {
-      
-      let req = this.api.get(`/soccer/odds/next3/${page}`)
-      return req
-    } catch (error) {
-      console.log(error)
-      throw error
+  async getMatchesFromDate(date,page){
+    try{
+      let req = await this.api.get(`/soccer/odds/date/${date}/${page}`);
+      return req.data
+
+    }catch(err){
+      throw err
     }
   }
 
-  async getNextWeekMatches(page){
+  async getFixtureInfo(fixtureId){
     try {
-      let req = this.api.get(`/soccer/odds/week${page}`)
-      return req
+      let req = await this.api.get(`/soccer/fixture/:${fixtureId}`)
+      
+      return req.data
+
     } catch (error) {
-      console.log(error)
       throw error
     }
   }
