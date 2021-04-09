@@ -18,7 +18,7 @@ class Api {
       },
       (error) => {
         localStorage.removeItem('token');
-        window.location = '/auth/login';
+        throw JSON.stringify(error.response.data.message)
       },
     );
   }
@@ -27,10 +27,11 @@ class Api {
     try {
       let request  = await this.api.post('/auth/login', payload);
       console.log('req', request);
-      localStorage.setItem('token', request.data.token);
+      request.data.token && localStorage.setItem('token', request.data.token)
       return request
     } catch (error) {
-      console.log(error);
+      
+      throw error
     }
   }
 
@@ -138,8 +139,6 @@ class Api {
       console.log(err.message)
     }
   }
-
-  
 
 }
 

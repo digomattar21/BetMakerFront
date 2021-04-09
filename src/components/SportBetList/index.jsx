@@ -32,8 +32,8 @@ const SportBetList = ({ sport_key }) => {
   }, [sport_key]);
 
   return (
-    <Grid item xs={7} className={classes.container}>
-    <MiddleSectionNav sport_name={sport_key}/>
+    <Grid item xs={6} className={classes.container}>
+    <MiddleSectionNav sport_name={sport_key} matches={h2hOdds} setMatches={setH2hOdds}/>
       {h2hOdds && h2hOdds.length > 0 &&
         h2hOdds.map((odd) => {
           return <BetCard h2hOdd={odd} key={odd.id} id={odd.id}/>

@@ -1,9 +1,9 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import SoccerApi from "../../utils/soccerApi.utils";
-import { MiddleSectionNav } from "../MiddleSectionNav";
 import { SoccerBetCard } from "../SoccerBetCard";
 import CachedIcon from "@material-ui/icons/Cached";
+import { SocccerMiddleSectionNav } from "../SoccerMiddleSectionNav";
 
 const useStyles = makeStyles((theme) => ({
   iconContainer:{
@@ -45,7 +45,7 @@ const SoccerMiddleSection = () => {
   return (
     <>
       <Grid item xs={6} style={{ marginTop: "60px" }}>
-        <MiddleSectionNav
+        <SocccerMiddleSectionNav
           sport_name="Soccer"
           matches={matches}
           setMatches={setMatches}

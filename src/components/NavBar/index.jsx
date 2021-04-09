@@ -150,14 +150,6 @@ export const NavBar = () => {
             </Button>
 
             </Link>
-
-            <Button className={classes.casinoBtn2} onClick={() =>handleLiveClick()}>
-            <Typography variant="h6" className={classes.subtitle}>
-                LIVE
-            </Typography>
-            </Button>
-
-
             </>
           )}
         </div>
