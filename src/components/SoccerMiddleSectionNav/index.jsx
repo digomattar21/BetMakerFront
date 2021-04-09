@@ -63,18 +63,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SocccerMiddleSectionNav = ({ sport_name, matches, setMatches, handleFilterClick, makeReq }) => {
+export const SocccerMiddleSectionNav = ({ sport_name, matches, setMatches, handleFilterClick, makeReq, disabledD, disabledWeek, disabledLive, disabledNext3 }) => {
   const classes = useStyles();
   const { userAuth, changeUserAuth } = useContext(AuthContext);
   const { userInfo, getUserInfo } = useContext(UserInfoContext);
   const router = useRouter();
-
-  const [disabledD, setDisabledD] = useState(true);
-  const [disabledNext3, setDisabledNext3] = useState(false);
-  const [disabledLive, setDisabledLive] = useState(false);
-  const [disabledWeek, setDisabledWeek] = useState(false);
-
-  const [page,setPage] = useState(1)
 
   const getUser = async () => {
     try {

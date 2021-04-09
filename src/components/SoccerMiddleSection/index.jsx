@@ -44,6 +44,7 @@ const SoccerMiddleSection = () => {
   const [disabledNext3, setDisabledNext3] = useState(false);
   const [disabledLive, setDisabledLive] = useState(false);
   const [disabledWeek, setDisabledWeek] = useState(false);
+  const sport_name='Soccer'
 
   useEffect(() => {
     loadNextDayEvents();
@@ -55,7 +56,7 @@ const SoccerMiddleSection = () => {
       let req = await SoccerApi.getNextDayMatches(page);
       setMatches(req[0]);
     } catch (err) {
-      console.log(err.message);
+      console.log(err);
     }
   };
 
@@ -181,13 +182,17 @@ const SoccerMiddleSection = () => {
   return (
     <Grid item xs={6} style={{ marginTop: "60px" }}>
       <SocccerMiddleSectionNav
-        sport_name="Soccer"
+        sport_name={sport_name}
         matches={matches}
         setMatches={setMatches}
         page={page}
         setPage={setPage}
         handleFilterClick={handleFilterClick}
         makeReq={makeReq}
+        disabledD={disabledD}
+        disabledLive={disabledLive}
+        disabledNext3={disabledNext3}
+        disabledWeek={disabledWeek}
       />
       {matches.length > 0 &&
         matches.map((match) => {

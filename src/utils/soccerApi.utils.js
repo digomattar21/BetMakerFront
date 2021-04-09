@@ -19,7 +19,7 @@ class SoccerApi {
       },
       (error) => {
         localStorage.removeItem('token');
-        window.location = '/auth/login';
+        throw JSON.stringify(error.response.data.message)
       },
     );
   }
@@ -27,13 +27,12 @@ class SoccerApi {
   async getNextDayMatches(page){
       try{
         let req = await this.api.get(`/soccer/odds/today/${page}`);
-        if (req.status===200){
-            return req.data.matches
-        } else{
-          return ['no results']
-        }       
+        
+        return req.data.matches
+          
       }catch(err){
-          console.log(err.message)
+          console.log(err)
+          throw err
       }
   }
 
@@ -43,7 +42,8 @@ class SoccerApi {
       let req = this.api.get(`/soccer/odds/next3/${page}`)
       return req
     } catch (error) {
-      console.log(error.message)
+      console.log(error)
+      throw error
     }
   }
 
@@ -52,7 +52,8 @@ class SoccerApi {
       let req = this.api.get(`/soccer/odds/week${page}`)
       return req
     } catch (error) {
-      console.log(error.message)
+      console.log(error)
+      throw error
     }
   }
 
