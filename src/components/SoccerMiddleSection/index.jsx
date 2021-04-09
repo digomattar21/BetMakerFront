@@ -150,7 +150,7 @@ const SoccerMiddleSection = () => {
     if (date=='D+1'){
         try {
             setMatches([])
-            let req = await SoccerApi.getNextDayMatches()
+            let req = await SoccerApi.getNextDayMatches(page)
             setMatches(req.data.matches[0])
         } catch (error) {
             console.log(error.message)
@@ -168,7 +168,7 @@ const SoccerMiddleSection = () => {
     }else if (date=='week'){
         try {
             setMatches([])
-            let req = await SoccerApi.getNextWeekMatches()
+            let req = await SoccerApi.getNextWeekMatches(page)
             setMatches(req.data.matches[2])
         } catch (error) {
             console.log(error.message)
@@ -206,6 +206,7 @@ const SoccerMiddleSection = () => {
               leagueCountry={match.league.country}
               bookmakers={match.bookmakers}
               leagueFlag={match.league.flag}
+              date={match.fixt}
             />
           );
         })}
