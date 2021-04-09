@@ -7,6 +7,8 @@ import AuthContext from "../../context/UserProvider/context";
 import { useRouter } from "next/router";
 import UserInfoContext from "../../context/UserInfoProvider/context";
 import SoccerApi from "../../utils/soccerApi.utils";
+import { TextField } from "@material-ui/core";
+import getNextNDates from "../../../../backend/util/routes_util/getNextNDates";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "12px",
     fontWeight: "bold",
     color: "#383838",
-    marginBottom: "7vh",
+    marginBottom: "9vh",
   },
 
   title: {
@@ -61,13 +63,33 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "flex-start",
   },
+  liveBtn4: {
+    backgroundColor: "#D6ED17FF",
+    border: "1px solid #D6ED17FF",
+    borderRadius: "5px",
+    fontWeight: "bold",
+    color: "#383838",
+    marginBottom: "9vh",
+    padding:'3px 3px'
+  },
 }));
 
-export const SocccerMiddleSectionNav = ({ sport_name, matches, setMatches, handleFilterClick, makeReq, disabledD, disabledWeek, disabledLive, disabledNext3 }) => {
+export const SocccerMiddleSectionNav = ({
+  sport_name,
+  matches,
+  setMatches,
+  handleFilterClick,
+  makeReq,
+  disabledD,
+  disabledLive,
+  handleDateChange,
+}) => {
   const classes = useStyles();
   const { userAuth, changeUserAuth } = useContext(AuthContext);
   const { userInfo, getUserInfo } = useContext(UserInfoContext);
   const router = useRouter();
+
+  const [todaysDate, setTodaysDate] = useState(null);
 
   const getUser = async () => {
     try {
@@ -82,10 +104,16 @@ export const SocccerMiddleSectionNav = ({ sport_name, matches, setMatches, handl
   };
 
   useEffect(() => {
+    getDate();
     getUser();
   }, []);
 
-  
+  const getDate = () => {
+    const today = new Date();
+    var tomorroww = new Date(today);
+    tomorroww.setDate(tomorroww.getDate());
+    setTodaysDate(tomorroww.toISOString().split("T")[0]);
+  };
 
   return (
     <div position="fixed" className={classes.navbar}>
@@ -117,23 +145,20 @@ export const SocccerMiddleSectionNav = ({ sport_name, matches, setMatches, handl
               D+1
             </Typography>
           </Button>
-          <Button
-            className={classes.liveBtn3}
-            disabled={disabledNext3}
-            onClick={(e) => handleFilterClick(e, "D+3")}
-          >
-            <Typography variant="h6" className={classes.subtitle2}>
-              D+3
-            </Typography>
-          </Button>
-          <Button
-            className={classes.liveBtn3}
-            disabled={disabledWeek}
-            onClick={(e) => handleFilterClick(e, "Week")}
-          >
-            <Typography variant="h6" className={classes.subtitle2}>
-              This Week
-            </Typography>
+          <Button variant="contained" className={classes.liveBtn4}>
+            <form className={classes.container} noValidate>
+              <TextField
+                id="date"
+                type="date"
+                defaultValue={todaysDate}
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value=''
+                onChange={(e) => handleDateChange(e)}
+              />
+            </form>
           </Button>
         </Toolbar>
       </div>
