@@ -19,7 +19,10 @@ class SoccerApi {
       },
       (error) => {
         localStorage.removeItem('token');
-        throw JSON.stringify(error.response.data.message)
+        if ((error.response.data.message!='"Token inválido ou expirado"')){
+          throw JSON.stringify(error.response.data.message)
+        }
+        
       },
     );
   }
