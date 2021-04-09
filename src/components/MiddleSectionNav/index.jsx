@@ -106,27 +106,27 @@ export const MiddleSectionNav = ({ sport_name, matches, setMatches }) => {
         disabledLive?setDisabledLive(!disabledLive):setDisabledLive(disabledLive);
         disabledNext3?setDisabledNext3(!disabledNext3):setDisabledNext3(disabledNext3);
         disabledWeek?setDisabledWeek(!disabledWeek):setDisabledWeek(disabledWeek);
-        if (sport_name =='Soccer'){
-            makeReq('D+1')
-        }
+        // if (sport_name =='Soccer'){
+        //     makeReq('D+1')
+        // }
         break;
       case "D+3":
         setDisabledNext3(!disabledNext3);
         disabledD?setDisabledD(!disabledD):setDisabledD(disabledD);
         disabledLive?setDisabledLive(!disabledLive):setDisabledLive(disabledLive);
         disabledWeek?setDisabledWeek(!disabledWeek):setDisabledWeek(disabledWeek);
-        if (sport_name =='Soccer'){
-            makeReq('D+3')
-        }
+        // if (sport_name =='Soccer'){
+        //     makeReq('D+3')
+        // }
         break;
       case "Week":
         setDisabledWeek(!disabledWeek);
         disabledD?setDisabledD(!disabledD):setDisabledD(disabledD);
         disabledNext3?setDisabledNext3(!disabledNext3):setDisabledNext3(disabledNext3);
         disabledLive?setDisabledLive(!disabledLive):setDisabledLive(disabledLive);
-        if (sport_name =='Soccer'){
-            makeReq('week')
-        }
+        // if (sport_name =='Soccer'){
+        //     makeReq('week')
+        // }
         break;
       default:
         break;

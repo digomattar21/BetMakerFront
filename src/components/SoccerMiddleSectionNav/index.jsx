@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SocccerMiddleSectionNav = ({ sport_name, matches, setMatches }) => {
+export const SocccerMiddleSectionNav = ({ sport_name, matches, setMatches, handleFilterClick, makeReq }) => {
   const classes = useStyles();
   const { userAuth, changeUserAuth } = useContext(AuthContext);
   const { userInfo, getUserInfo } = useContext(UserInfoContext);
@@ -92,79 +92,7 @@ export const SocccerMiddleSectionNav = ({ sport_name, matches, setMatches }) => 
     getUser();
   }, []);
 
-  const handleFilterClick = (e, btn) => {
-    console.log(btn);
-    switch (btn) {
-      case "live":
-        setDisabledLive(!disabledLive);
-        disabledD?setDisabledD(!disabledD):setDisabledD(disabledD);
-        disabledNext3?setDisabledNext3(!disabledNext3):setDisabledNext3(disabledNext3);
-        disabledWeek?setDisabledWeek(!disabledWeek):setDisabledWeek(disabledWeek);
-        break;
-      case "D+1":
-        setDisabledD(!disabledD);
-        disabledLive?setDisabledLive(!disabledLive):setDisabledLive(disabledLive);
-        disabledNext3?setDisabledNext3(!disabledNext3):setDisabledNext3(disabledNext3);
-        disabledWeek?setDisabledWeek(!disabledWeek):setDisabledWeek(disabledWeek);
-        if (sport_name =='Soccer'){
-            makeReq('D+1')
-        }
-        break;
-      case "D+3":
-        setDisabledNext3(!disabledNext3);
-        disabledD?setDisabledD(!disabledD):setDisabledD(disabledD);
-        disabledLive?setDisabledLive(!disabledLive):setDisabledLive(disabledLive);
-        disabledWeek?setDisabledWeek(!disabledWeek):setDisabledWeek(disabledWeek);
-        if (sport_name =='Soccer'){
-            makeReq('D+3')
-        }
-        break;
-      case "Week":
-        setDisabledWeek(!disabledWeek);
-        disabledD?setDisabledD(!disabledD):setDisabledD(disabledD);
-        disabledNext3?setDisabledNext3(!disabledNext3):setDisabledNext3(disabledNext3);
-        disabledLive?setDisabledLive(!disabledLive):setDisabledLive(disabledLive);
-        if (sport_name =='Soccer'){
-            makeReq('week')
-        }
-        break;
-      default:
-        break;
-    }
-  };
-
-
-  const makeReq =async(date)=>{
-    if (date=='D+1'){
-        try {
-            setMatches([])
-            let req = await SoccerApi.getNextDayMatches()
-            setMatches(req)
-        } catch (error) {
-            console.log(error.message)
-        }
-    } else if (date=='D+3'){
-        try {
-            setMatches([])
-            let req = await SoccerApi.getNext3DaysMatches()
-            setMatches(req.data.matches[1])
-        } catch (error) {
-            console.log(error.message)
-        }
-
-    }else if (date=='week'){
-        try {
-            setMatches([])
-            let req = await SoccerApi.getNextWeekMatches()
-            setMatches(req.data.matches[2])
-        } catch (error) {
-            console.log(error.message)
-        }
-
-    }else{
-        print('nope')
-    }
-  }
+  
 
   return (
     <div position="fixed" className={classes.navbar}>
