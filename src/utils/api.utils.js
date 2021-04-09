@@ -30,16 +30,18 @@ class Api {
       request.data.token && localStorage.setItem('token', request.data.token)
       return request
     } catch (error) {
-      
       throw error
     }
   }
 
   async signup(payload) {
-    let request = await this.api.post('/auth/signup', payload);
-    console.log(request)
-    localStorage.setItem('token', request.data.token);
-    return request.token;
+    try{
+      let request = await this.api.post('/auth/signup', payload);
+      request.data.token && localStorage.setItem('token', request.data.token);
+      return request.token;
+    }catch(err){
+      throw err
+    }
   }
 
   async confirmCode(payload) {
@@ -47,7 +49,7 @@ class Api {
       let req = await this.api.post('/auth/confirm', payload);
       return req;
     } catch (error) {
-      console.log(error);
+      throw error
     }
   }
 

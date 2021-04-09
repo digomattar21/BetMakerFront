@@ -7,8 +7,58 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import AuthContext from '../../context/UserProvider/context';
+import { CardMedia } from '@material-ui/core';
 
-export const SoccerBetCard = ({ fixtureId, leagueId, bookmakers, leagueCountry, leagueLogo, leagueName  }) => {
+const useStyles = makeStyles({
+  root: {
+    marginTop: '12px',
+    minWidth: '275px',
+    maxHeight: '350px',
+    border: '1px solid lightgray'
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  cardActions:{
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  teamsSubContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent:'center',
+    alignItems: 'center',
+  },
+  teamsContainer:{
+    display: 'flex',
+    justifyContent:'space-evenly',
+    width:'50%'
+  },
+  leagueContainer:{
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+
+  },
+  leagueLogo:{
+    height:'35px',
+    maxheight:'40px',
+    marginLeft:'6px'
+  },
+  leagueFlag:{
+    height:'25px',
+    maxHeight:'29px'
+  }
+});
+
+
+export const SoccerBetCard = ({ fixtureId, leagueId, bookmakers, leagueCountry, leagueLogo,leagueFlag,  leagueName  }) => {
   const classes = useStyles();
   const [addBets, setAddBets] = useState([]);
 
@@ -43,8 +93,10 @@ export const SoccerBetCard = ({ fixtureId, leagueId, bookmakers, leagueCountry, 
 
   return (
     <Card className={classes.root}>
-    <CardContent>
-        <h2>{leagueName}</h2>
+    <CardContent className={classes.leagueContainer}>
+        {leagueFlag && <img src={leagueFlag} alt='league flag' className={classes.leagueFlag}></img>}
+        {leagueLogo && <img src={leagueLogo} alt='league logo' className={classes.leagueLogo}></img>}
+        {!leagueLogo && <h2>{leagueName}</h2>}
     </CardContent>
       <CardContent style={{display:'flex', justifyContent: 'center'}}>
         <div className={classes.teamsContainer}>
@@ -78,41 +130,3 @@ export const SoccerBetCard = ({ fixtureId, leagueId, bookmakers, leagueCountry, 
   );
 };
 
-const useStyles = makeStyles({
-  root: {
-    marginTop: '12px',
-    minWidth: '275px',
-    maxHeight: '350px',
-    border: '1px solid lightgray'
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  pos: {
-    marginBottom: 12,
-  },
-  buttonGroup: {
-
-  },
-  cardActions:{
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  teamsSubContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent:'center',
-    alignItems: 'center',
-  },
-  teamsContainer:{
-    display: 'flex',
-    justifyContent:'space-evenly',
-    width:'50%'
-  }
-});
