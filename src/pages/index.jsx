@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import { SportsList } from '../components/SportsList';
 import { NavBar } from '../components/NavBar';
 import { RightSideNavAuth } from '../components/RightSideNavAuth';
@@ -10,7 +9,7 @@ import AuthContext from '../context/UserProvider/context';
 import {RightSideNav} from '../components/RightSideNav';
 
 
-export default function Home() {
+function Home() {
   const {userAuth,changeUserAuth} = useContext(AuthContext)
 
   return (
@@ -29,3 +28,4 @@ export default function Home() {
     </>
   );
 }
+export default Home;
