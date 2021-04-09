@@ -54,13 +54,18 @@ const useStyles = makeStyles({
   leagueFlag:{
     height:'25px',
     maxHeight:'29px'
+  },
+  headerContainer:{
+    display: 'flex',
+    justifyContent:'space-between'
   }
 });
 
 
-export const SoccerBetCard = ({ fixtureId, leagueId, bookmakers, leagueCountry, leagueLogo,leagueFlag,  leagueName  }) => {
+export const SoccerBetCard = ({ date, fixtureId, leagueId, bookmakers, leagueCountry, leagueLogo,leagueFlag,  leagueName  }) => {
   const classes = useStyles();
   const [addBets, setAddBets] = useState([]);
+  const [dateFormatted, setDateFormatted] = useState(null)
 
 
   const { userAuth, changeUserAuth } = useContext(AuthContext);
@@ -86,18 +91,29 @@ export const SoccerBetCard = ({ fixtureId, leagueId, bookmakers, leagueCountry, 
   
   useEffect(() => {
     getMostBets();
+    formatDate()
   },[]);
+
+  const formatDate=()=>{
+    setDateFormatted(date.split('T')[0].split('-').reverse().join('/'))
+  
+  }
 
 
 
 
   return (
     <Card className={classes.root}>
+    <div className={classes.headerContainer}>
     <CardContent className={classes.leagueContainer}>
         {leagueFlag && <img src={leagueFlag} alt='league flag' className={classes.leagueFlag}></img>}
         {leagueLogo && <img src={leagueLogo} alt='league logo' className={classes.leagueLogo}></img>}
         {!leagueLogo && <h2>{leagueName}</h2>}
     </CardContent>
+    <CardContent className={classes.leagueContainer}>
+        {dateFormatted && <h3>{dateFormatted}</h3>}
+    </CardContent>
+    </div>
       <CardContent style={{display:'flex', justifyContent: 'center'}}>
         <div className={classes.teamsContainer}>
           <div className={classes.teamsSubContainer}>
