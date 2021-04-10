@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components';
-import { theme } from '../styles/theme';
+import  theme  from '../styles/theme';
 import  GlobalStyles  from '../styles/global-styles';
 import P from 'prop-types';
 import AuthContext from '../context/UserProvider/context';

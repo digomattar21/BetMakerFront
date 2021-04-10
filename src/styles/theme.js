@@ -1,4 +1,6 @@
-export const theme = {
+import { createMuiTheme } from '@material-ui/core/styles';
+
+ const theme = createMuiTheme({
     colors: {
         primary: '#0A1128',
         secondaryColor: '#dc143c',
@@ -34,4 +36,6 @@ export const theme = {
         huge: '5.6rem',
         xhuge: '6.4rem',
       },
-  }
+  })
+
+  export default theme
