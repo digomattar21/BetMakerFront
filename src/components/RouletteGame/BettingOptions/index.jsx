@@ -204,16 +204,16 @@ export function BettingOptions({
               </h3>
             )}
             {chipCount < 1 && totalAmountWon === 0 && isSpinComplete ? (
-              <button className="restart-button" onClick={resetLayout}>
-                +1000 Restart
-              </button>
+              <button className="restart-button" onClick={collectWinnings}>
+                Oh no, you dont have any money left
+              </button> && setTimeout(()=>{collectWinnings()},2500)
             ) : (
               <button
                 className="collectWinningsButton"
                 onClick={collectWinnings}
               >
                 {totalAmountWon > 0 ? "Collect Winnings" : "Clear Layout"}
-              </button>
+              </button> && setTimeout(() => {collectWinnings()},3000)
             )}
           </div>
         ) : (

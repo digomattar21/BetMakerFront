@@ -1070,10 +1070,8 @@ function RouletteGame() {
 
   const updateChipCount = async(chips)=>{
       try {
-          console.log('entrouuuuuuuu')
         let req = await Api.updatePlayerChips(chips)
         setChipCount(req.chips)
-        console.log('chipssss', req.chips)
       } catch (error) {
           console.log(error.message)
       }
