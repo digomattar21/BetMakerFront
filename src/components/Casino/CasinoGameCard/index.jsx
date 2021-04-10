@@ -33,7 +33,7 @@ export default function CasinoGameCard({name,imgSrc,description,path}) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image='assets/img/5-chip.png'
+          image={imgSrc}
           title="Img"
         />
         {/* <img src='https://thumbs.dreamstime.com/b/blackjack-casino-man-makes-bet-puts-chip-37886914.jpg' alt='img'/> */}

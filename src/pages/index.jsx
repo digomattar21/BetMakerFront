@@ -7,9 +7,12 @@ import { useContext, useEffect, useState } from 'react';
 import SportsMiddleSection from '../components/SportsMiddleSection/SportsMiddleSection';
 import AuthContext from '../context/UserProvider/context';
 import {RightSideNav} from '../components/RightSideNav';
+import Api from '../utils/api.utils'
+import IndexMiddleSectionNav from '../components/IndexMiddleSectionNav';
+import IndexMiddleSection from '../components/IndexMiddleSection';
 
 
-function Home() {
+function Home({sports}) {
   const {userAuth,changeUserAuth} = useContext(AuthContext)
 
   return (
@@ -17,9 +20,10 @@ function Home() {
       <NavBar />
       
         <Grid container spacing={3}>
-          <SportsList />
+          <SportsList sports={sports}/>
           <Grid item xs={6}>
-            <SportsMiddleSection />
+          <IndexMiddleSectionNav/>
+          <IndexMiddleSection/>
           </Grid>
         {userAuth && <RightSideNavAuth />}
         {!userAuth && <RightSideNav />}
@@ -28,5 +32,28 @@ function Home() {
     </>
   );
 }
+
+export async function getStaticProps(){
+  
+  try {
+    let req = await Api.getSports()
+    
+    const sports = req.data;
+      return {
+        props:{
+          sports
+        }
+      }
+     
+    
+  } catch (error) {
+    console.log(error.message)
+    
+  }
+
+
+}
+
+
 
 export default Home;

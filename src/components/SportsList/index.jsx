@@ -29,24 +29,18 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export const SportsList = () => {
+export const SportsList = ({sports}) => {
   const [searchValue, setSearchValue] = useState('');
-  const [sports, setSports] = useState([]);
+  const [sportsList, setSportsList] = useState(null);
   const classes = useStyles();
 
   useEffect(() => {
     loadSports();
   }, []);
 
-  async function loadSports(){
-    try {
-      let req = await Api.getSports()
-      console.log(req)
-      setSports(req.data)
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
+ function loadSports(){
+    setSportsList(sports)
+}
 
   async function handleSearchValueChange(e) {
     try {
@@ -64,8 +58,8 @@ export const SportsList = () => {
         handleSearchValueChange={handleSearchValueChange}
       />
       <SoccerNavCard />
-      {!searchValue &&
-        sports.map((sport) => {
+      {!searchValue && sportsList && 
+        sportsList.map((sport) => {
           if (sport.key != 'soccer' &&  sport.key != 'Soccer'){
             return (
             <SportsCard
@@ -76,8 +70,8 @@ export const SportsList = () => {
           );
           }
         })}
-      {searchValue &&
-        sports.map((sport) => {
+      {searchValue && sportsList &&
+        sportsList.map((sport) => {
           return sport.title.toLowerCase().includes(searchValue.toLowerCase()) ? (
             <SportsCard
               key={sport.key}

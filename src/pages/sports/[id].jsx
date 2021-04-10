@@ -6,30 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { NavBar } from '../../components/NavBar';
 import { RightSideNav } from '../../components/RightSideNav';
-import { MiddleSectionNav } from '../../components/MiddleSectionNav';
-
-export default function About() {
-  const router = useRouter();
-  const { id } = router.query;
-  const sport_key = id;
-  const classes = useStyles()
-
-  useEffect(()=>{
-    console.log(id)
-  },[])
-
-
-  return (
-    <>
-      <NavBar />
-        <Grid container spacing={3} className={classes.container}>
-            <SportsList />
-            <SportBetList sport_key={sport_key} />
-          <RightSideNav />
-        </Grid>
-    </>
-  );
-}
+import Api from '../../utils/api.utils';
+import SportsApi from '../../utils/sportsApi.util'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,3 +36,81 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start'
   }
 }));
+
+
+function About({h2hOdds}) {
+  const router = useRouter();
+  const { id } = router.query;
+  const sport_key = id;
+  const classes = useStyles()
+
+  useEffect(()=>{
+    console.log(id)
+  },[])
+
+
+  return (
+    <>
+      <NavBar />
+        <Grid container spacing={3} className={classes.container}>
+            <SportsList />
+            <SportBetList sport_key={sport_key} h2hOdds={h2hOdds} />
+          <RightSideNav />
+        </Grid>
+    </>
+  );
+}
+
+
+export const getStaticPaths = async ()=>{
+
+  try {
+    let req = await Api.getSports()
+    
+    const sports = req.data;
+
+    const paths = sports.map(sport => {
+      return {
+        params:{id:sport.key}
+      }
+  })
+    
+    return {
+      paths: paths,
+      fallback:false
+    }
+     
+    
+  } catch (error) {
+    console.log(error.message)
+    
+  }
+
+
+}
+
+export async function getStaticProps({params}){
+  
+  try {
+    let req = await SportsApi.getMatchesFromSport(params.id)
+    
+    const h2hOdds = req.data[0];
+      return {
+        props:{
+          h2hOdds
+        }
+      }
+     
+    
+  } catch (error) {
+    console.log(error.message)
+    
+  }
+
+
+}
+
+
+
+
+export default About;

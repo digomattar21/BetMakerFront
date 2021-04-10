@@ -3,13 +3,15 @@ import axios from 'axios';
 class SoccerApi {
   constructor() {
     this.api = axios.create({
-      baseURL: 'https://betmaker-api.herokuapp.com',
-      // baseURL:'http://localhost:3080'
+      // baseURL: 'https://betmaker-api.herokuapp.com',
+      baseURL:'http://localhost:3080'
     });
 
     this.api.interceptors.request.use(config => {
-      const token = localStorage.getItem('token');
-      config.headers.Authorization = `Bearer ${token}`;
+      if (typeof window !== 'undefined') {
+        const token = localStorage.getItem('token');
+        config.headers.Authorization = `Bearer ${token}`;
+    }
       return config;
     });
 
@@ -18,8 +20,10 @@ class SoccerApi {
         return response;
       },
       (error) => {
-        localStorage.removeItem('token');
-        if ((error.response.data.message!='"Token inválido ou expirado"')){
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('token')
+      }
+        if ((error.response.data.message!='"Token inválido ou expirado"' || error.response.data.message!="Token inválido ou expirado" || error.response.data.message!='req sem token' || error.response.data.message!='"req sem token"')){
           throw JSON.stringify(error.response.data.message)
         }
         
@@ -30,7 +34,6 @@ class SoccerApi {
   async getNextDayMatches(page){
       try{
         let req = await this.api.get(`/soccer/odds/today/${page}`);
-        
         return req.data.matches
           
       }catch(err){
