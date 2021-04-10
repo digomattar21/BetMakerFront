@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import UserInfoContext from "../../context/UserInfoProvider/context";
 import SoccerApi from "../../utils/soccerApi.utils";
 import { TextField } from "@material-ui/core";
-import getNextNDates from "../../../../backend/util/routes_util/getNextNDates";
 
 const useStyles = makeStyles((theme) => ({
   root: {

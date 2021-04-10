@@ -67,23 +67,28 @@ export const getStaticPaths = async ()=>{
   try {
     let req = await Api.getSports()
     
-    const sports = req.data;
-
+    if (req){
+      const sports = req.data;
+    }else{
+      const sports = [];
+    }
+    
     const paths = sports.map(sport => {
       return {
         params:{id:sport.key}
       }
   })
     
-    return {
-      paths: paths,
-      fallback:false
-    }
+      return {
+        paths: paths,
+        fallback:false
+      }
+    
      
     
   } catch (error) {
     console.log(error.message)
-    
+
   }
 
 
