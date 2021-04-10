@@ -30,7 +30,7 @@ export default function CasinoGameCard({name,imgSrc,description,path}) {
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea onClick={()=>handlePlayClick()}>
         <CardMedia
           className={classes.media}
           image={imgSrc}
